@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 
 import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
@@ -21,7 +22,7 @@ import com.example.shaysheli.assignment3.R;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class StudentListFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class StudentListFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
@@ -60,7 +61,8 @@ public class StudentListFragment extends Fragment implements AdapterView.OnItemC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_studentlist_list, container, false);
-
+        //Button btnAdd = (Button) view.findViewById(R.id.buttonAddFrag);
+        //btnAdd.setOnClickListener(this);
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -98,6 +100,11 @@ public class StudentListFragment extends Fragment implements AdapterView.OnItemC
 
     }
 
+    @Override
+    public void onClick(View v) {
+        mListener.onListFragmentInteraction(null, "Add");
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -110,6 +117,6 @@ public class StudentListFragment extends Fragment implements AdapterView.OnItemC
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Student item);
+        void onListFragmentInteraction(Student item, String type);
     }
 }

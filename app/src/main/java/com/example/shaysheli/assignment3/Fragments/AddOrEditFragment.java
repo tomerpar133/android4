@@ -9,33 +9,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
 import com.example.shaysheli.assignment3.R;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link StudentDetailsFragment.OnFragmentInteractionListener} interface
+ * {@link AddOrEditFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link StudentDetailsFragment#newInstance} factory method to
+ * Use the {@link AddOrEditFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentDetailsFragment extends Fragment implements View.OnClickListener {
+public class AddOrEditFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_STID = "STID";
+    private static final String ARG_TYPE = "TYPE";
+    private static Button btnAddEdit = null;
+    private static Student stEdit;
 
     // TODO: Rename and change types of parameters
     private String STID;
+    private String TYPE;
 
     private OnFragmentInteractionListener mListener;
 
-    public StudentDetailsFragment() {
+    public AddOrEditFragment() {
         // Required empty public constructor
     }
 
@@ -44,13 +47,14 @@ public class StudentDetailsFragment extends Fragment implements View.OnClickList
      * this fragment using the provided parameters.
      *
      * @param STID Parameter 1.
-     * @return A new instance of fragment StudentDetailsFragment.
+     * @return A new instance of fragment AddOrEditFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StudentDetailsFragment newInstance(String STID) {
-        StudentDetailsFragment fragment = new StudentDetailsFragment();
+    public static AddOrEditFragment newInstance(String STID, String TYPE) {
+        AddOrEditFragment fragment = new AddOrEditFragment();
         Bundle args = new Bundle();
         args.putString(ARG_STID, STID);
+        args.putString(ARG_TYPE, TYPE);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,6 +64,7 @@ public class StudentDetailsFragment extends Fragment implements View.OnClickList
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             STID = getArguments().getString(ARG_STID);
+            TYPE = getArguments().getString(ARG_TYPE);
         }
     }
 
@@ -67,27 +72,35 @@ public class StudentDetailsFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_student_details, container, false);
-        Button btnEdit = (Button) v.findViewById(R.id.btnDetailEdit);
-        btnEdit.setOnClickListener(this);
-        Student stDetail = Model.instance.getStudentByID(STID);
-        ImageView stuIMG = (ImageView) v.findViewById(R.id.stDetailImage);
-        TextView nameTXT = (TextView) v.findViewById(R.id.stDetailName);
-        nameTXT.setText(stDetail.name);
-        TextView idTXT = (TextView) v.findViewById(R.id.stDetailId);
-        idTXT.setText(stDetail.id);
-        TextView phoneTXT = (TextView) v.findViewById(R.id.stDetailphone);
-        phoneTXT.setText(stDetail.phone);
-        TextView addressTXT = (TextView) v.findViewById(R.id.stDetailAddress);
-        addressTXT.setText(stDetail.address);
-        CheckBox stuCB = (CheckBox) v.findViewById(R.id.stDetailCB);
-        stuCB.setChecked(stDetail.checked);
+        View v = inflater.inflate(R.layout.fragment_add_or_edit, container, false);
+        btnAddEdit = (Button) v.findViewById(R.id.AddEditButton);
+        Button btnAddEditCancel = (Button) v.findViewById(R.id.AddEditButtonCancel);
+        Button btnAddEditDel = (Button) v.findViewById(R.id.AddEditButtonDel);
+        final EditText edtName = (EditText) v.findViewById(R.id.AddEditName);
+        final EditText edtId = (EditText) v.findViewById(R.id.AddEditId);
+        final EditText edtPhone = (EditText) v.findViewById(R.id.AddEditPhone);
+        final EditText edtAddress = (EditText) v.findViewById(R.id.AddEditAddress);
+        final ImageView edtImage = (ImageView) v.findViewById(R.id.AddEditImage);
+        final CheckBox edtCb = (CheckBox) v.findViewById(R.id.AddEditCB);
+
+        if (TYPE.equals("ADD")) {
+            btnAddEdit.setText("Add");
+            stEdit = new Student();
+        }else {
+            btnAddEdit.setText("Edit");
+            btnAddEditDel.setVisibility(View.VISIBLE);
+            stEdit = Model.instance.getStudentByID(STID);
+            edtAddress.setText(stEdit.address);
+            edtId.setText(stEdit.id);
+            edtName.setText(stEdit.name);
+            edtPhone.setText(stEdit.phone);
+        }
 
         return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(String uri) {
+    public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
@@ -110,11 +123,6 @@ public class StudentDetailsFragment extends Fragment implements View.OnClickList
         mListener = null;
     }
 
-    @Override
-    public void onClick(View v) {
-        mListener.onFragmentInteraction(STID);
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -127,6 +135,6 @@ public class StudentDetailsFragment extends Fragment implements View.OnClickList
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(String stid);
+        void onFragmentInteraction(Uri uri);
     }
 }

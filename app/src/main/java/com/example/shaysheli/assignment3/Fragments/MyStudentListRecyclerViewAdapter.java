@@ -43,7 +43,7 @@ public class MyStudentListRecyclerViewAdapter extends RecyclerView.Adapter<MyStu
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.mItem, "Edit");
                 }
             }
         });
