@@ -1,10 +1,15 @@
 package com.example.shaysheli.assignment3.Fragments;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,6 +39,7 @@ public class StudentDetailsFragment extends Fragment implements View.OnClickList
     private String STID;
 
     private OnFragmentInteractionListener mListener;
+    public static FragmentTransaction tran;
 
     public StudentDetailsFragment() {
         // Required empty public constructor
@@ -57,6 +63,8 @@ public class StudentDetailsFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             STID = getArguments().getString(ARG_STID);
@@ -68,8 +76,6 @@ public class StudentDetailsFragment extends Fragment implements View.OnClickList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_student_details, container, false);
-        Button btnEdit = (Button) v.findViewById(R.id.btnDetailEdit);
-        btnEdit.setOnClickListener(this);
         Student stDetail = Model.instance.getStudentByID(STID);
         ImageView stuIMG = (ImageView) v.findViewById(R.id.stDetailImage);
         TextView nameTXT = (TextView) v.findViewById(R.id.stDetailName);
@@ -128,5 +134,33 @@ public class StudentDetailsFragment extends Fragment implements View.OnClickList
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(String stid);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_edit, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit:
+                Log.d("dev", "edit now");
+                AddOrEditFragment details = AddOrEditFragment.newInstance(STID, "Edit");
+                tran = getFragmentManager().beginTransaction();
+                tran.replace(R.id.main_container, details).commit();
+
+                break;
+            case android.R.id.home:
+                StudentListFragment listFragment = StudentListFragment.newInstance(1);
+                tran = getFragmentManager().beginTransaction();
+                tran.replace(R.id.main_container, listFragment);
+                tran.commit();
+                break;
+            default:
+                break;
+        }
+
+        return true;
     }
 }

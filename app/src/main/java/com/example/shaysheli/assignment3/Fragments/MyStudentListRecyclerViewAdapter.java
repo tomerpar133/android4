@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.example.shaysheli.assignment3.Model.Student;
 import com.example.shaysheli.assignment3.R;
-import com.example.shaysheli.assignment3.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 

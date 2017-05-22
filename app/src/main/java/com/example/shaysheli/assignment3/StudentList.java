@@ -1,27 +1,23 @@
 package com.example.shaysheli.assignment3;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class StudentList extends Activity {
     ListView list;
@@ -61,6 +57,33 @@ public class StudentList extends Activity {
                 startActivityForResult(intent, REQUEST_ADD_ID);
             }
         });
+
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_new:
+                Intent intent = new Intent(StudentList.this, AddOrEdit.class);
+                intent.putExtra("txtBTN", "ADD");
+                startActivityForResult(intent, REQUEST_ADD_ID);
+
+                break;
+            case android.R.id.home:
+
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

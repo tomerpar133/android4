@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 
 import com.example.shaysheli.assignment3.Fragments.*;
 import com.example.shaysheli.assignment3.Fragments.AddOrEditFragment;
@@ -20,6 +22,7 @@ public class MainActivity extends Activity implements StudentListFragment.OnList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         StudentListFragment listFragment = StudentListFragment.newInstance(1);
         tran = getFragmentManager().beginTransaction();
         tran.add(R.id.main_container, listFragment);
@@ -34,9 +37,9 @@ public class MainActivity extends Activity implements StudentListFragment.OnList
             tran = getFragmentManager().beginTransaction();
             tran.replace(R.id.main_container, details).commit();
         } else {
-            AddOrEditFragment details = AddOrEditFragment.newInstance(null, "Add");
+            AddOrEditFragment add = AddOrEditFragment.newInstance(null, "Add");
             tran = getFragmentManager().beginTransaction();
-            tran.replace(R.id.main_container, details).commit();
+            tran.replace(R.id.main_container, add).commit();
         }
     }
 

@@ -1,20 +1,29 @@
 package com.example.shaysheli.assignment3.Fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 
+import com.example.shaysheli.assignment3.AddOrEdit;
 import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
 import com.example.shaysheli.assignment3.R;
+import com.example.shaysheli.assignment3.StudentList;
 
 /**
  * A fragment representing a list of Items.
@@ -28,6 +37,7 @@ public class StudentListFragment extends Fragment implements AdapterView.OnItemC
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    public static FragmentTransaction tran;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -50,6 +60,8 @@ public class StudentListFragment extends Fragment implements AdapterView.OnItemC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -61,17 +73,20 @@ public class StudentListFragment extends Fragment implements AdapterView.OnItemC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_studentlist_list, container, false);
-        //Button btnAdd = (Button) view.findViewById(R.id.buttonAddFrag);
-        //btnAdd.setOnClickListener(this);
+//        Button btnAdd = (Button) view.findViewById(R.id.buttonAddFrag);
+//        btnAdd.setOnClickListener(this);
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
+
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+
             recyclerView.setAdapter(new MyStudentListRecyclerViewAdapter(Model.instance.getAllStudents(), mListener));
         }
         return view;
@@ -83,6 +98,7 @@ public class StudentListFragment extends Fragment implements AdapterView.OnItemC
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
+            Log.d("dev", "im context: " + context);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -118,5 +134,34 @@ public class StudentListFragment extends Fragment implements AdapterView.OnItemC
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Student item, String type);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_new:
+                Log.d("dev", "will create new ");
+                AddOrEditFragment details = AddOrEditFragment.newInstance(null, "Add");
+                tran = getFragmentManager().beginTransaction();
+                tran.replace(R.id.main_container, details).commit();
+
+                break;
+            case android.R.id.home:
+                StudentListFragment listFragment = StudentListFragment.newInstance(1);
+                tran = getFragmentManager().beginTransaction();
+                tran.replace(R.id.main_container, listFragment);
+                tran.commit();
+                break;
+            default:
+                break;
+        }
+
+        return true;
     }
 }

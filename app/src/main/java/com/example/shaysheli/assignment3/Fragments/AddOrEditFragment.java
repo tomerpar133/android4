@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
 import com.example.shaysheli.assignment3.R;
+
+import static com.example.shaysheli.assignment3.Fragments.StudentDetailsFragment.tran;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,6 +65,9 @@ public class AddOrEditFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+
         if (getArguments() != null) {
             STID = getArguments().getString(ARG_STID);
             TYPE = getArguments().getString(ARG_TYPE);
@@ -83,7 +89,7 @@ public class AddOrEditFragment extends Fragment {
         final ImageView edtImage = (ImageView) v.findViewById(R.id.AddEditImage);
         final CheckBox edtCb = (CheckBox) v.findViewById(R.id.AddEditCB);
 
-        if (TYPE.equals("ADD")) {
+        if (TYPE.equals("Add")) {
             btnAddEdit.setText("Add");
             stEdit = new Student();
         }else {
@@ -136,5 +142,33 @@ public class AddOrEditFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                switch (TYPE) {
+                    // return to list mode
+                    case "Add":
+                        StudentListFragment listFragment = StudentListFragment.newInstance(1);
+                        tran = getFragmentManager().beginTransaction();
+                        tran.replace(R.id.main_container, listFragment);
+                        tran.commit();
+                        break;
+
+                    // return to view mode
+                    case "Edit":
+                        StudentDetailsFragment details = StudentDetailsFragment.newInstance(STID);
+                        tran = getFragmentManager().beginTransaction();
+                        tran.replace(R.id.main_container, details).commit();
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+
+        return true;
     }
 }

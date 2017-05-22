@@ -5,12 +5,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
@@ -21,6 +23,8 @@ public class AddOrEdit extends Activity {
     private static Button btnAddEdit = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         returnIntent = new Intent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_or_edit);
@@ -103,5 +107,31 @@ public class AddOrEdit extends Activity {
                 }
             }
         });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit:
+
+//                getActionBar().setDisplayHomeAsUpEnabled(true);
+                break;
+            case android.R.id.home:
+//                if (menuItem != null) {
+//                    menuItem.setVisible(!menuItem.isVisible());
+//                }
+
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
