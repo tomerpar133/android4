@@ -1,30 +1,28 @@
-package com.example.shaysheli.assignment3;
+package com.example.shaysheli.assignment3.Fragments;
 
-import android.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
-import com.example.shaysheli.assignment3.StudentListFragment.OnListFragmentInteractionListener;
+import com.example.shaysheli.assignment3.R;
 import com.example.shaysheli.assignment3.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link StudentListFragment.OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyStudentListRecyclerViewAdapter extends RecyclerView.Adapter<MyStudentListRecyclerViewAdapter.ViewHolder> {
 
     private final List<Student> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final StudentListFragment.OnListFragmentInteractionListener mListener;
 
-    public MyStudentListRecyclerViewAdapter(List<Student> items, OnListFragmentInteractionListener listener) {
+    public MyStudentListRecyclerViewAdapter(List<Student> items, StudentListFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }

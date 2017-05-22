@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.example.shaysheli.assignment3.StudentListFragment"
+    tools:context="com.example.shaysheli.assignment3.Fragments.StudentListFragment"
     tools:listitem="@layout/fragment_studentlist" />

@@ -1,7 +1,6 @@
-package com.example.shaysheli.assignment3;
+package com.example.shaysheli.assignment3.Fragments;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
+import com.example.shaysheli.assignment3.R;
 
 /**
  * A fragment representing a list of Items.

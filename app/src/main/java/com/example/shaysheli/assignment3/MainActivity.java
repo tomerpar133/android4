@@ -5,8 +5,9 @@ import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.shaysheli.assignment3.Fragments.StudentDetailsFragment;
+import com.example.shaysheli.assignment3.Fragments.StudentListFragment;
 import com.example.shaysheli.assignment3.Model.Student;
-import com.example.shaysheli.assignment3.dummy.DummyContent;
 
 public class MainActivity extends Activity implements StudentListFragment.OnListFragmentInteractionListener, StudentDetailsFragment.OnFragmentInteractionListener{
     public static Activity mainActivity;

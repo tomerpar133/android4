@@ -1,4 +1,4 @@
-package com.example.shaysheli.assignment3;
+package com.example.shaysheli.assignment3.Fragments;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
+import com.example.shaysheli.assignment3.R;
 
 
 /**
