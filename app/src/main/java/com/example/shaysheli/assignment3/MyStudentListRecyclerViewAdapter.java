@@ -1,11 +1,13 @@
 package com.example.shaysheli.assignment3;
 
+import android.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
 import com.example.shaysheli.assignment3.StudentListFragment.OnListFragmentInteractionListener;
 import com.example.shaysheli.assignment3.dummy.DummyContent.DummyItem;
@@ -35,17 +37,14 @@ public class MyStudentListRecyclerViewAdapter extends RecyclerView.Adapter<MyStu
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).name);
-
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
