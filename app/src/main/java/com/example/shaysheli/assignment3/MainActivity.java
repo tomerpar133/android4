@@ -2,20 +2,13 @@ package com.example.shaysheli.assignment3;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 
 import com.example.shaysheli.assignment3.Fragments.*;
 import com.example.shaysheli.assignment3.Fragments.AddOrEditFragment;
 import com.example.shaysheli.assignment3.Model.Student;
 
 public class MainActivity extends Activity implements StudentListFragment.OnListFragmentInteractionListener, StudentDetailsFragment.OnFragmentInteractionListener, AddOrEditFragment.OnFragmentInteractionListener{
-    public static Activity mainActivity;
-    public static int RESAULT_CHANGED = 200;
-    public static int RESAULT_DEL = 300;
-    public static int RESAULT_KEEP = 404;
     public static FragmentTransaction tran;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +44,10 @@ public class MainActivity extends Activity implements StudentListFragment.OnList
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onFragmentInteractionAddOrEdit() {
+        StudentListFragment listFragment = StudentListFragment.newInstance(1);
+        tran = getFragmentManager().beginTransaction();
+        tran.replace(R.id.main_container, listFragment);
+        tran.commit();
     }
 }

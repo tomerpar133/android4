@@ -1,8 +1,9 @@
 package com.example.shaysheli.assignment3.Fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.net.Uri;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.shaysheli.assignment3.MainActivity;
 import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
 import com.example.shaysheli.assignment3.R;
@@ -27,13 +29,19 @@ import static com.example.shaysheli.assignment3.Fragments.StudentDetailsFragment
  * Use the {@link AddOrEditFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddOrEditFragment extends Fragment {
+public class AddOrEditFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_STID = "STID";
     private static final String ARG_TYPE = "TYPE";
     private static Button btnAddEdit = null;
     private static Student stEdit;
+    private static EditText edtName = null;
+    private static EditText edtId = null;
+    private static EditText edtPhone = null;
+    private static EditText edtAddress = null;
+    private static ImageView edtImage = null;
+    private static CheckBox edtCb = null;
 
     // TODO: Rename and change types of parameters
     private String STID;
@@ -82,12 +90,12 @@ public class AddOrEditFragment extends Fragment {
         btnAddEdit = (Button) v.findViewById(R.id.AddEditButton);
         Button btnAddEditCancel = (Button) v.findViewById(R.id.AddEditButtonCancel);
         Button btnAddEditDel = (Button) v.findViewById(R.id.AddEditButtonDel);
-        final EditText edtName = (EditText) v.findViewById(R.id.AddEditName);
-        final EditText edtId = (EditText) v.findViewById(R.id.AddEditId);
-        final EditText edtPhone = (EditText) v.findViewById(R.id.AddEditPhone);
-        final EditText edtAddress = (EditText) v.findViewById(R.id.AddEditAddress);
-        final ImageView edtImage = (ImageView) v.findViewById(R.id.AddEditImage);
-        final CheckBox edtCb = (CheckBox) v.findViewById(R.id.AddEditCB);
+        edtName = (EditText) v.findViewById(R.id.AddEditName);
+        edtId = (EditText) v.findViewById(R.id.AddEditId);
+        edtPhone = (EditText) v.findViewById(R.id.AddEditPhone);
+        edtAddress = (EditText) v.findViewById(R.id.AddEditAddress);
+        edtImage = (ImageView) v.findViewById(R.id.AddEditImage);
+        edtCb = (CheckBox) v.findViewById(R.id.AddEditCB);
 
         if (TYPE.equals("Add")) {
             btnAddEdit.setText("Add");
@@ -102,14 +110,36 @@ public class AddOrEditFragment extends Fragment {
             edtPhone.setText(stEdit.phone);
         }
 
-        return v;
-    }
+        btnAddEditDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Model.instance.rmStu(stEdit)) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+                    alertDialog.setTitle("STUDENT DELETED");
+                    alertDialog.setMessage("SUCCESS");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+                mListener.onFragmentInteractionAddOrEdit();
+            }
+        });
+
+        btnAddEditCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onFragmentInteractionAddOrEdit();
+            }
+        });
+
+        btnAddEdit.setOnClickListener(this);
+
+        return v;
     }
 
     @Override
@@ -129,6 +159,48 @@ public class AddOrEditFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View v) {
+        stEdit.name = edtName.getText().toString();
+        stEdit.address = edtAddress.getText().toString();
+        String idToCheck = edtId.getText().toString();
+        stEdit.phone = edtPhone.getText().toString();
+        stEdit.imageUrl = "../res/drawable/grid.png";
+        stEdit.checked = edtCb.isChecked();
+
+        if (((Model.instance.getStudentByID(idToCheck) != null) && (btnAddEdit.getText().equals("Add"))) ||
+                ((!idToCheck.equals(stEdit.id)) && Model.instance.getStudentByID(idToCheck) != null) && (btnAddEdit.getText().equals("Edit")))
+        {
+            AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+            alertDialog.setTitle("ID IN USE");
+            alertDialog.setMessage("Choose another id");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
+        else {
+            stEdit.id = idToCheck;
+
+            if (Model.instance.editStudent(stEdit)) {
+                AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+                alertDialog.setTitle("STUDENT SAVED");
+                alertDialog.setMessage("SUCCESS");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+            mListener.onFragmentInteractionAddOrEdit();
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -141,7 +213,7 @@ public class AddOrEditFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteractionAddOrEdit();
     }
 
 

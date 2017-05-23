@@ -1,10 +1,8 @@
 package com.example.shaysheli.assignment3.Fragments;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,13 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 
-import com.example.shaysheli.assignment3.AddOrEdit;
 import com.example.shaysheli.assignment3.Model.Model;
 import com.example.shaysheli.assignment3.Model.Student;
 import com.example.shaysheli.assignment3.R;
-import com.example.shaysheli.assignment3.StudentList;
 
 /**
  * A fragment representing a list of Items.
@@ -73,8 +68,6 @@ public class StudentListFragment extends Fragment implements AdapterView.OnItemC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_studentlist_list, container, false);
-//        Button btnAdd = (Button) view.findViewById(R.id.buttonAddFrag);
-//        btnAdd.setOnClickListener(this);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
