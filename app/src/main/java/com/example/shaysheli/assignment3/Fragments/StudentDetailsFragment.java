@@ -89,6 +89,12 @@ public class StudentDetailsFragment extends Fragment implements View.OnClickList
         CheckBox stuCB = (CheckBox) v.findViewById(R.id.stDetailCB);
         stuCB.setChecked(stDetail.checked);
 
+        TextView stuBirthdayTime = (TextView) v.findViewById(R.id.stDetailBirthdayTime);
+        stuBirthdayTime.setText(stDetail.birthdayTime);
+
+        TextView stuBirthdayDate = (TextView) v.findViewById(R.id.stDetailBirthdayDate);
+        stuBirthdayDate.setText(stDetail.birthdayDate);
+
         return v;
     }
 

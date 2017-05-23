@@ -11,4 +11,6 @@ public class Student {
     public String address;
     public Boolean checked;
     public String imageUrl;
+    public String birthdayTime;
+    public String birthdayDate;
 }

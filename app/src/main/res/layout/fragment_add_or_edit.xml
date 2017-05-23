@@ -87,12 +87,42 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="birth time:"/>
+
+        <com.example.shaysheli.assignment3.Model.MyTimePicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timePicker"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="birth date:"/>
+
+        <com.example.shaysheli.assignment3.Model.MyDatePicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/datePicker"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <Button
             android:id="@+id/AddEditButtonCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:text="Cancle"/>
+            android:text="Cancel"/>
         <Button
             android:id="@+id/AddEditButtonDel"
             android:layout_width="wrap_content"

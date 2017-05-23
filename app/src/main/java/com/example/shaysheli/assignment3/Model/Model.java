@@ -18,7 +18,8 @@ public class Model {
             st.id = i + "";
             st.checked = false;
             st.imageUrl = "../res/drawable/grid.png";
-
+            st.birthdayTime = "10:10";
+            st.birthdayDate= "1-1-1970";
             data.add(i, st);
         }
     }

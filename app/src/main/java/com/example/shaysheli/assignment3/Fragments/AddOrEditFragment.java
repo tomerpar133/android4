@@ -16,6 +16,8 @@ import android.widget.ImageView;
 
 import com.example.shaysheli.assignment3.MainActivity;
 import com.example.shaysheli.assignment3.Model.Model;
+import com.example.shaysheli.assignment3.Model.MyDatePicker;
+import com.example.shaysheli.assignment3.Model.MyTimePicker;
 import com.example.shaysheli.assignment3.Model.Student;
 import com.example.shaysheli.assignment3.R;
 
@@ -42,6 +44,8 @@ public class AddOrEditFragment extends Fragment implements View.OnClickListener 
     private static EditText edtAddress = null;
     private static ImageView edtImage = null;
     private static CheckBox edtCb = null;
+    private static MyTimePicker timePicker = null;
+    private static MyDatePicker datePicker = null;
 
     // TODO: Rename and change types of parameters
     private String STID;
@@ -96,6 +100,8 @@ public class AddOrEditFragment extends Fragment implements View.OnClickListener 
         edtAddress = (EditText) v.findViewById(R.id.AddEditAddress);
         edtImage = (ImageView) v.findViewById(R.id.AddEditImage);
         edtCb = (CheckBox) v.findViewById(R.id.AddEditCB);
+        timePicker = (MyTimePicker) v.findViewById(R.id.timePicker);
+        datePicker = (MyDatePicker) v.findViewById(R.id.datePicker);
 
         if (TYPE.equals("Add")) {
             btnAddEdit.setText("Add");
@@ -108,6 +114,8 @@ public class AddOrEditFragment extends Fragment implements View.OnClickListener 
             edtId.setText(stEdit.id);
             edtName.setText(stEdit.name);
             edtPhone.setText(stEdit.phone);
+            timePicker.setText(stEdit.birthdayTime);
+            datePicker.setText(stEdit.birthdayDate);
         }
 
         btnAddEditDel.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +175,8 @@ public class AddOrEditFragment extends Fragment implements View.OnClickListener 
         stEdit.phone = edtPhone.getText().toString();
         stEdit.imageUrl = "../res/drawable/grid.png";
         stEdit.checked = edtCb.isChecked();
+        stEdit.birthdayTime = timePicker.getText().toString();
+        stEdit.birthdayDate = datePicker.getText().toString();
 
         if (((Model.instance.getStudentByID(idToCheck) != null) && (btnAddEdit.getText().equals("Add"))) ||
                 ((!idToCheck.equals(stEdit.id)) && Model.instance.getStudentByID(idToCheck) != null) && (btnAddEdit.getText().equals("Edit")))
